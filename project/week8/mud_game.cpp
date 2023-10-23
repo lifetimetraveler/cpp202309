@@ -9,7 +9,7 @@ const int mapY = 5;
 bool checkXY(int user_x, int mapX, int user_y, int mapY);
 void displayMap(int map[][mapX], int user_x, int user_y);
 bool checkGoal(int map[][mapX], int user_x, int user_y);
-
+void opti();
 //추가 기능
 
 void checkState(int map[][mapX], int user_x, int user_y);//유저가 무언가 만났을 때의 반응을 위한 함수. 유저의 위치 확인 후 hp 변환
@@ -207,4 +207,22 @@ void checkState(int map[][mapX], int user_x, int user_y)
 	}
 }
 
-bool in
+
+bool inMap = checkXY(user_x, mapX, user_y, mapY);//이동한 값이 타당한지를 확인하는 함수. 잘못되면 flase를 출력. inMap은 그 값을 받기 위한 변수
+if (inMap == false) {//위의 함수가 false를 출력한 경우
+	cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
+	user_y += 1;// 그 반대 방향으로 되돌아감
+}
+
+void opti(int user_x, int mapX, int user_y, int mapY, string user_input) 
+{
+	if (user_x >= 0 && user_x < mapX && user_y >= 0 && user_y < mapY) 
+	{
+		return;//
+	}
+	else
+	{
+		cout << "맵을 벗어났습니다. 다시돌아갑니다.";
+		switch(user_input)
+	}
+}
