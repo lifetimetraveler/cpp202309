@@ -9,7 +9,7 @@ const int mapY = 5;
 bool checkXY(int user_x, int mapX, int user_y, int mapY);
 void displayMap(int map[][mapX], int user_x, int user_y);
 bool checkGoal(int map[][mapX], int user_x, int user_y);
-void opti();
+void opti(int& user_x, int mapX, int& user_y, int mapY);
 //추가 기능
 
 void checkState(int map[][mapX], int user_x, int user_y);//유저가 무언가 만났을 때의 반응을 위한 함수. 유저의 위치 확인 후 hp 변환
@@ -32,7 +32,7 @@ int main() {
 
 	// 게임 시작 
 	while (1) { // 사용자에게 계속 입력받기 위해 무한 루프
-
+		
 		//Hp가 0이면 종료를 위함
 		if (Hp == 0)//0일 경우
 		{
@@ -50,8 +50,7 @@ int main() {
 			user_y -= 1;
 			bool inMap = checkXY(user_x, mapX, user_y, mapY);//이동한 값이 타당한지를 확인하는 함수. 잘못되면 flase를 출력. inMap은 그 값을 받기 위한 변수
 			if (inMap == false) {//위의 함수가 false를 출력한 경우
-				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-				user_y += 1;// 그 반대 방향으로 되돌아감
+				opti(user_x, mapX, user_y, mapY);
 			}
 			else {//입력 받은 이동 값이 타당한 경우
 				cout << "위로 한 칸 올라갑니다." << endl;//메세지와 맵을 출력하는 함수를 실행
@@ -65,11 +64,10 @@ int main() {
 			user_y += 1;
 			bool inMap = checkXY(user_x, mapX, user_y, mapY);
 			if (inMap == false) {
-				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-				user_y -= 1;
+				opti(user_x, mapX, user_y, mapY);
 			}
 			else {
-				cout << "위로 한 칸 내려갑니다." << endl;
+				cout << "아래로로 한 칸 내려갑니다." << endl;
 				displayMap(map, user_x, user_y);
 				Hp--;
 				checkState(map, user_x, user_y);
@@ -81,8 +79,7 @@ int main() {
 			bool inMap = checkXY(user_x, mapX, user_y, mapY);
 
 			if (inMap == false) {
-				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-				user_x += 1;
+				opti(user_x, mapX, user_y, mapY);
 			}
 			else {
 				cout << "왼쪽으로 이동합니다." << endl;
@@ -96,8 +93,7 @@ int main() {
 			user_x += 1;
 			bool inMap = checkXY(user_x, mapX, user_y, mapY);
 			if (inMap == false) {
-				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-				user_x -= 1;
+				opti(user_x, mapX, user_y, mapY);
 			}
 			else {
 				cout << "오른쪽으로 이동합니다." << endl;
@@ -207,22 +203,24 @@ void checkState(int map[][mapX], int user_x, int user_y)
 	}
 }
 
-
-bool inMap = checkXY(user_x, mapX, user_y, mapY);//이동한 값이 타당한지를 확인하는 함수. 잘못되면 flase를 출력. inMap은 그 값을 받기 위한 변수
-if (inMap == false) {//위의 함수가 false를 출력한 경우
-	cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
-	user_y += 1;// 그 반대 방향으로 되돌아감
-}
-
-void opti(int user_x, int mapX, int user_y, int mapY, string user_input) 
-{
-	if (user_x >= 0 && user_x < mapX && user_y >= 0 && user_y < mapY) 
+//오류 메세지 출력 및 이동 취소
+void opti(int& user_x, int mapX, int& user_y, int mapY) 
+{//맵 바깥으로 나가는 네 가지의 상황에 맞는 좌표 값의 수정
+	cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;//오류 메세지를 출력하기 위함
+	if (user_x >= mapX)//맵보다 좌표가 커지면
 	{
-		return;//
+		user_x -= 1;
 	}
-	else
+	else if (user_x < 0)//맵의 바깥으로 나가면
 	{
-		cout << "맵을 벗어났습니다. 다시돌아갑니다.";
-		switch(user_input)
+		user_x += 1;
+	}
+	else if (user_y >= mapY)//맵보다 좌표가 커지면
+	{
+		user_y -= 1;
+	}
+	else if (user_y < 0)//좌표가 바깥으로 나가면
+	{
+		user_y += 1;
 	}
 }
