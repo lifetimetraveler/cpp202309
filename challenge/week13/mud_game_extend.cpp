@@ -241,6 +241,7 @@ int main() {
 		else if (user_input == "지도") {//지도를 입력 받은 경우
 			// TODO: 지도 보여주기 함수 호출
 			displayMap(map, m.user_x, m.user_y,w.user_x,w.user_y);
+			continue;//지도를 봐도 차례가 넘어가지 않도록
 		}
 		else if (user_input == "종료") {//종료를 입력한 경우
 			cout << "종료합니다.";
@@ -346,7 +347,7 @@ void checkState(int map[][mapX],User& user)
 		break;
 	case 2://적을 만난 경우
 		cout << "적을 만났습니다. Hp가 2 줄어듭니다.\n";//메세지 출력
-		user.wound++;
+		user.wound++;//적을 만났음을 표시하기 위해 사용
 	    user.DecreaseHP(2);//데미지를 줌//객체 함수로 체력 2을 감소
 		break;
 	case 3://포션을 만난경우
