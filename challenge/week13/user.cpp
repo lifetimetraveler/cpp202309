@@ -11,6 +11,10 @@ int User::GetHP()
 {
 	return hp;
 }
+void User::SetHP(int hhp)
+{
+	hp = hhp;
+}
 void User::doAttack()
 {
 	cout << "공격합니다" << endl;
